@@ -10,6 +10,27 @@
 #include <dt-bindings/zmk/keys.h>
 
 / {
+    combos {
+        compatible = "zmk,combos";
+
+        caplocks {
+            bindings = <&kp CAPS>;
+            key-positions = <28 31>;
+            timeout-ms = <50>;
+            layers = <0>;
+        };
+
+        left_bootloader {
+            bindings = <&bootloader>;
+            key-positions = <50 51 52>;
+        };
+
+        right_bootloader {
+            bindings = <&bootloader>;
+            key-positions = <57 56 55>;
+        };
+    };
+
     keymap {
         compatible = "zmk,keymap";
 
@@ -22,11 +43,11 @@
             //                     | ALT  | GUI  | LOWER|  SPACE |  | ENTER | RAISE| BSPC  |  DEL  |
 
             bindings = <
-&kp ESC    &kp N1  &kp N2  &kp N3        &kp N4    &kp N5                        &kp N6  &kp N7         &kp N8     &kp N9   &kp N0    &kp GRAVE
-&kp TAB    &kp Q   &kp W   &kp F         &kp P     &kp B                         &kp J   &kp L          &kp U      &kp Y    &kp SEMI  &kp MINUS
-&kp LCTRL  &kp A   &kp R   &kp S         &kp T     &kp G                         &kp M   &kp N          &kp E      &kp I    &kp O     &kp SQT
-&kp LSHFT  &kp Z   &kp X   &kp C         &kp D     &kp V   &mo 3        &none    &kp K   &kp H          &kp COMMA  &kp DOT  &kp FSLH  &kp RSHFT
-                           &kp LEFT_ALT  &kp LGUI  &mo 1   &kp SPACE    &kp RET  &mo 2   &kp BACKSPACE  &kp DEL
+&kp ESC  &kp N1          &kp N2          &kp N3              &kp N4            &kp N5                        &kp N6           &kp N7             &kp N8               &kp N9           &kp N0           &kp GRAVE
+&kp TAB  &kp Q           &kp W           &kp F               &kp P             &kp B                         &kp J            &kp L              &kp U                &kp Y            &kp SEMI         &kp MINUS
+&trans   &mt LEFT_GUI A  &mt LEFT_ALT R  &mt LEFT_CONTROL S  &mt LEFT_SHIFT T  &kp G                         &kp M            &mt RIGHT_SHIFT N  &mt RIGHT_CONTROL E  &mt RIGHT_ALT I  &mt RIGHT_GUI O  &kp SQT
+&trans   &kp Z           &kp X           &kp C               &kp D             &kp V   &mo 4        &none    &kp K            &kp H              &kp COMMA            &kp DOT          &kp FSLH         &trans
+                                         &trans              &trans            &mo 1   &kp SPACE    &kp RET  &lt 2 BACKSPACE  &kp DELETE         &trans
             >;
 
             // sensor-bindings = <&inc_dec_kp C_VOL_UP C_VOL_DN>;
@@ -60,24 +81,43 @@
             //                     |      |      |      |        |  |       |      |       |       |
 
             bindings = <
-&kp F11  &kp F1  &kp F2  &kp F3  &kp F4  &kp F5                    &kp F6    &kp F7    &kp F8  &kp F9     &kp F10  &kp F12
-&trans   &kp N1  &kp N2  &kp N3  &kp N4  &kp N5                    &trans    &trans    &trans  &trans     &trans   &trans
-&trans   &kp N6  &kp N7  &kp N8  &kp N9  &kp N0                    &kp LEFT  &kp DOWN  &kp UP  &kp RIGHT  &trans   &trans
-&trans   &trans  &trans  &trans  &trans  &trans  &trans    &trans  &trans    &trans    &trans  &trans     &trans   &trans
-                         &trans  &trans  &trans  &trans    &trans  &trans    &trans    &trans
+&kp F11  &kp F1  &kp F2  &kp F3  &kp F4  &kp F5                    &kp F6  &kp F7    &kp F8    &kp F9  &kp F10    &kp F12
+&trans   &kp N1  &kp N2  &kp N3  &kp N4  &kp N5                    &trans  &trans    &trans    &trans  &trans     &trans
+&trans   &kp N6  &kp N7  &kp N8  &kp N9  &kp N0                    &trans  &kp LEFT  &kp DOWN  &kp UP  &kp RIGHT  &trans
+&trans   &trans  &trans  &trans  &trans  &trans  &trans    &trans  &trans  &trans    &trans    &trans  &trans     &trans
+                         &trans  &trans  &trans  &trans    &trans  &trans  &trans    &trans
             >;
 
             // sensor-bindings = <&inc_dec_kp C_VOL_UP C_VOL_DN>;
         };
 
+        utility_layer {
+            bindings = <
+&kp      &kp     &kp     &kp     &kp     &kp                  &kp  &kp                &kp               &kp              &kp  &kp
+&kp F11  &kp F1  &kp F2  &kp F3  &kp F4  &kp F5               &kp  &kp                &kp               &kp              &kp  &kp
+&kp F12  &kp F6  &kp F7  &kp F8  &kp F9  &kp F10              &kp  &kp K_PREVIOUS     &kp K_PLAY_PAUSE  &kp K_FORWARD    &kp  &kp
+&kp      &kp     &kp     &kp     &kp     &kp      &kp    &kp  &kp  &kp K_VOLUME_DOWN  &kp K_MUTE        &kp K_VOLUME_UP  &kp  &kp
+                         &kp     &kp     &kp      &kp    &kp  &kp  &kp                &kp
+            >;
+        };
+
         config_layer {
             bindings = <
-&bt BT_CLR      &bt BT_SEL 0  &bt BT_SEL 1  &bt BT_SEL 2  &bt BT_SEL 3  &bt BT_SEL 4                    &ext_power EP_TOG  &ext_power EP_ON  &ext_power EP_OFF  &trans  &soft_off  &bootloader
-&trans          &trans        &trans        &trans        &trans        &trans                          &trans             &trans            &trans             &trans  &trans     &trans
-&trans          &trans        &trans        &trans        &trans        &trans                          &trans             &trans            &trans             &trans  &trans     &trans
-&bt BT_CLR_ALL  &trans        &trans        &trans        &trans        &trans        &trans    &trans  &trans             &trans            &trans             &trans  &trans     &sys_reset
+&bt BT_CLR      &bt BT_SEL 0  &bt BT_SEL 1  &bt BT_SEL 2  &bt BT_SEL 3  &bt BT_SEL 4                    &ext_power EP_TOG  &ext_power EP_ON  &ext_power EP_OFF  &trans  &trans  &trans
+&trans          &trans        &trans        &trans        &trans        &trans                          &trans             &trans            &trans             &trans  &trans  &trans
+&trans          &trans        &trans        &trans        &trans        &trans                          &trans             &trans            &trans             &trans  &trans  &trans
+&bt BT_CLR_ALL  &trans        &trans        &trans        &trans        &trans        &trans    &trans  &trans             &trans            &trans             &trans  &trans  &trans
                                             &trans        &trans        &trans        &trans    &trans  &trans             &trans            &trans
             >;
+        };
+    };
+
+    conditional_layers {
+        compatible = "zmk,conditional-layers";
+
+        utility {
+            if-layers = <1 2>;
+            then-layer = <3>;
         };
     };
 };
